@@ -1,5 +1,6 @@
 package NotepadChenGuang;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
@@ -14,10 +15,12 @@ import javax.swing.JTextPane;
 
 public class GUI implements ActionListener
 {
+    // Main window
+    JFrame window;
+
     // Popup message
     PopupMessage popupMessage;
-    JButton resetText = new JButton("Reset text settings");
-    JFrame window;
+
     // TextArea
     JTextPane textArea;
     JScrollPane scrollPane;
@@ -27,11 +30,16 @@ public class GUI implements ActionListener
     JMenuItem fNew, fOpen, fSave, fSaveAs, fExit,
     eCut, eCopy, ePaste, eFind,
     fFontAndSize, fTextColor, fTextHighlightColor,fBackgroundColor;
+    
+    // Buttons resetText and quickHighlight
+    JButton resetText = new JButton("Reset text settings");
+    JButton quickHighlight = new JButton("Highlight");
 
+    // Functions for frame
     FileFunction fileFunction = new FileFunction(this);
     FormatFunction formatFunction = new FormatFunction(this);
 
-
+    // Constructor
     public GUI()
     {
         createWindow();
@@ -44,6 +52,7 @@ public class GUI implements ActionListener
         window.setVisible(true);
     }
 
+    // Create window
     public void createWindow()
     {
         window = new JFrame("NotePad by Neliubin Daniil");
@@ -52,6 +61,7 @@ public class GUI implements ActionListener
         window.setLocationRelativeTo(null);
     }
 
+    // Create text area
     public void createTextPane()
     {
         textArea = new JTextPane();
@@ -63,25 +73,30 @@ public class GUI implements ActionListener
         window.add(scrollPane);
     }
 
+    // Create menu bar
     public void createMenuBar()
     {
         menuBar = new JMenuBar();
 
         fileMenu = new JMenu("File");
         editMenu = new JMenu("Edit");
-       
-
         formatMenu = new JMenu("Format");
 
         menuBar.add(fileMenu);
-
         menuBar.add(editMenu);
-
         menuBar.add(formatMenu);
         
         menuBar.add(resetText);
         resetText.addActionListener(this);
         resetText.setActionCommand("Reset");
+        resetText.setBorderPainted(false);
+        
+        menuBar.add(quickHighlight);
+        quickHighlight.addActionListener(this);
+        quickHighlight.setActionCommand("QuickHighlight");
+        quickHighlight.setBackground(Color.YELLOW);
+        quickHighlight.setOpaque(true);
+        quickHighlight.setBorderPainted(false);   
 
         this.menuBar.setBorder(BorderFactory.createEmptyBorder());
         window.setJMenuBar(menuBar);
@@ -192,7 +207,8 @@ public class GUI implements ActionListener
                 formatFunction.setBackgroundColor(); break;
             case "Reset":
                 formatFunction.resetText(); break;
-            
+            case "QuickHighlight":
+                formatFunction.quickHighlight(); break;
         }
     }
 

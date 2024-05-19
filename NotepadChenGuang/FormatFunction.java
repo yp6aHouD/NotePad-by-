@@ -18,6 +18,7 @@ import javax.swing.text.StyledDocument;
 public class FormatFunction
 {
     private GUI gui;
+    private PopupMessage popupMessage;
     private static String selectedFont;
     private static String selectedFontStyle;
     private static int selectedFontSize;
@@ -238,6 +239,26 @@ public class FormatFunction
             // Если цвет был выбран, установите его в качестве цвета фона JTextArea
             gui.textArea.setBackground(selectedColor);
         }
+    }
+
+    public void quickHighlight()
+    {
+        String selectedText = gui.textArea.getSelectedText();
+        if (selectedText != null)
+        {
+            // Получение начала и конца выделенного текста
+            int start = gui.textArea.getSelectionStart();
+            int end = gui.textArea.getSelectionEnd();
+
+            // Создание нового стиля
+            StyledDocument doc = gui.textArea.getStyledDocument();
+            SimpleAttributeSet attrs = new SimpleAttributeSet();
+            StyleConstants.setBackground(attrs, Color.YELLOW);
+
+            // Применение стиля
+            doc.setCharacterAttributes(start, end - start, attrs, false);
+        }
+        else return;
     }
 
     // reset цвета текста и фона текста
