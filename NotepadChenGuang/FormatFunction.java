@@ -3,6 +3,7 @@ package NotepadChenGuang;
 import java.awt.Color;
 import java.awt.GraphicsEnvironment;
 import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -17,6 +18,9 @@ import javax.swing.text.StyledDocument;
 public class FormatFunction
 {
     private GUI gui;
+    private static String selectedFont;
+    private static String selectedFontStyle;
+    private static int selectedFontSize;
 
     public FormatFunction(GUI gui)
     {
@@ -27,28 +31,63 @@ public class FormatFunction
     //установка шрифта и размера
     public void setTextFontAndSize() 
     {
-        // Получение списка доступных шрифтов
+        // Получение текущего шрифта, размера и стиля текста
+        if (selectedFont == null)
+        {
+            selectedFont = gui.textArea.getFont().getFamily();
+        }
+        if (selectedFontSize == 0)
+        {
+            selectedFontSize = gui.textArea.getFont().getSize();
+        }
+        if (selectedFontStyle == null)
+        {
+            selectedFontStyle = "Default";
+        }
+
+        // Получение и создание выпадающего списка со шрифтами
         String[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
         JComboBox<String> fontList = new JComboBox<>(fonts);
         fontList.setEditable(true);
-
-        // Создание выпадающего списка с размерами шрифтов
-        Integer[] fontSizes = {10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30};
+        fontList.setSelectedItem(selectedFont);
+        
+        // Создание выпадающего списка с размерами
+        Integer[] fontSizes = {8, 10, 11, 12, 13, 14, 16, 18, 20, 22, 24, 26, 28, 30};
         JComboBox<Integer> fontSizeList = new JComboBox<>(fontSizes);
-        fontSizeList.setEditable(true);
+        fontSizeList.setEditable(false);
+        fontSizeList.setSelectedItem(selectedFontSize);
 
+        // Создание выпадающего списка со стилями текста
+        String[] fontStyles = {"Default", "Bold", "Italic", "Bold Italic"};
+        JComboBox<String> fontStyleList = new JComboBox<>(fontStyles);
+        fontStyleList.setEditable(false);
+        fontStyleList.setSelectedItem(selectedFontStyle);
+        
         // Создание панели с выпадающими списками
         JPanel panel = new JPanel();
-        panel.add(new JLabel("Font:"));
-        panel.add(fontList);
-        panel.add(Box.createHorizontalStrut(15)); // a spacer
-        panel.add(new JLabel("Size:"));
-        panel.add(fontSizeList);
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        
+        // Создание первого ряда панели
+        JPanel firstRow = new JPanel();
+        firstRow.add(new JLabel("Font:"));
+        firstRow.add(fontList);
+        firstRow.add(Box.createHorizontalStrut(10)); // a spacer
+        firstRow.add(new JLabel("Size:"));
+        firstRow.add(fontSizeList);
 
-        // Создание окна с выбором шрифта и размера шрифта
+        // Создание второго ряда панели
+        JPanel secondRow = new JPanel(); 
+        secondRow.add(new JLabel("Style:"));
+        secondRow.add(fontStyleList);
+
+        // Добавление рядов в панель
+        panel.add(firstRow); panel.add(secondRow);
+
+        // Показ окна и выбор шрифта / размера / стиля
         JOptionPane.showMessageDialog(null, panel, "Choose Font and Size", JOptionPane.QUESTION_MESSAGE);
-        String selectedFont = (String) fontList.getSelectedItem();
-        Integer selectedFontSize = (Integer) fontSizeList.getSelectedItem();
+        selectedFont = (String) fontList.getSelectedItem();
+        selectedFontSize = (Integer) fontSizeList.getSelectedItem();
+        selectedFontStyle = (String) fontStyleList.getSelectedItem();
 
         // Получение выделенного текста
         String selectedText = gui.textArea.getSelectedText();
@@ -67,6 +106,23 @@ public class FormatFunction
             StyleConstants.setFontFamily(style, selectedFont);
             StyleConstants.setFontSize(style, selectedFontSize);
 
+            // switch для установки стиля текста
+            switch (selectedFontStyle) 
+            {
+                case "Bold":
+                    StyleConstants.setBold(style, true);
+                    break;
+                case "Italic":
+                    StyleConstants.setItalic(style, true);
+                    break;
+                case "Bold Italic":
+                    StyleConstants.setBold(style, true);
+                    StyleConstants.setItalic(style, true);
+                    break;
+                default:
+                    break;
+            }
+
             // Применение стиля к выделенному тексту
             doc.setCharacterAttributes(start, end - start, style, false);
         } 
@@ -75,15 +131,36 @@ public class FormatFunction
         {
             // Получение StyledDocument
             StyledDocument doc = gui.textArea.getStyledDocument();
-            int caret = gui.textArea.getCaretPosition();
 
             // Создание нового стиля
             Style style = doc.addStyle("NewFontAndSizeStyle", null);
             StyleConstants.setFontFamily(style, selectedFont);
             StyleConstants.setFontSize(style, selectedFontSize);
 
-            // Установка шрифта и размера шрифта для всего текста, если ничего не выделено
-            doc.setParagraphAttributes(caret, doc.getLength() - caret, style, false);
+            // switch для установки стиля текста
+            switch (selectedFontStyle) 
+            {
+                case "Bold":
+                    StyleConstants.setBold(style, true);
+                    break;
+                case "Italic":
+                    StyleConstants.setItalic(style, true);
+                    break;
+                case "Bold Italic":
+                    StyleConstants.setBold(style, true);
+                    StyleConstants.setItalic(style, true);
+                    break;
+                default:
+                    break;
+            }
+
+            // Установка шрифта, размера и стиля шрифта для всего текста, если ничего не выделено
+            MutableAttributeSet attrs = gui.textArea.getInputAttributes();
+            attrs.removeAttribute(StyleConstants.FontFamily);
+            attrs.removeAttribute(StyleConstants.FontSize);
+            attrs.removeAttribute(StyleConstants.Bold);
+            attrs.removeAttribute(StyleConstants.Italic);
+            attrs.addAttributes(style);
         }
     }
 
@@ -136,14 +213,15 @@ public class FormatFunction
                 if (isTextColor)
                 {
                     StyleConstants.setForeground(style, selectedColor);
+                    gui.textArea.getInputAttributes().removeAttribute(StyleConstants.Foreground);
                 }
                 else
                 {
                     StyleConstants.setBackground(style, selectedColor);
+                    gui.textArea.getInputAttributes().removeAttribute(StyleConstants.Background);
                 }
                 // установка свойств для нового вводимого текста
                 MutableAttributeSet attrs = gui.textArea.getInputAttributes();
-                attrs.removeAttributes(attrs);
                 attrs.addAttributes(style);
             }
         }
@@ -176,6 +254,10 @@ public class FormatFunction
         // Сброс цвета фона на значение по умолчанию
         MutableAttributeSet attrs = new SimpleAttributeSet();
         StyleConstants.setBackground(attrs, gui.textArea.getBackground());
+
+        // Сброс шрифта и размера текста на значение по умолчанию
+        StyleConstants.setFontFamily(attrs, "Default");
+        StyleConstants.setFontSize(attrs, 13);
 
         gui.textArea.setCharacterAttributes(attrs, true);
         StyleConstants.setBackground(style, gui.textArea.getBackground());
