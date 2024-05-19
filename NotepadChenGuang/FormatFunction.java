@@ -17,8 +17,6 @@ import javax.swing.text.StyledDocument;
 public class FormatFunction
 {
     private GUI gui;
-    private static Style style;
-    private static StyledDocument doc;
 
     public FormatFunction(GUI gui)
     {
@@ -62,10 +60,10 @@ public class FormatFunction
             int end = gui.textArea.getSelectionEnd();
 
             // Получение StyledDocument
-            doc = gui.textArea.getStyledDocument();
+            StyledDocument doc = gui.textArea.getStyledDocument();
 
             // Создание нового стиля
-            style = doc.addStyle("NewFontAndSizeStyle", null);
+            Style style = doc.addStyle("NewFontAndSizeStyle", null);
             StyleConstants.setFontFamily(style, selectedFont);
             StyleConstants.setFontSize(style, selectedFontSize);
 
@@ -76,18 +74,16 @@ public class FormatFunction
         else 
         {
             // Получение StyledDocument
-            doc = gui.textArea.getStyledDocument();
+            StyledDocument doc = gui.textArea.getStyledDocument();
             int caret = gui.textArea.getCaretPosition();
 
             // Создание нового стиля
-            style = doc.addStyle("NewFontAndSizeStyle", null);
+            Style style = doc.addStyle("NewFontAndSizeStyle", null);
             StyleConstants.setFontFamily(style, selectedFont);
             StyleConstants.setFontSize(style, selectedFontSize);
 
             // Установка шрифта и размера шрифта для всего текста, если ничего не выделено
             doc.setParagraphAttributes(caret, doc.getLength() - caret, style, false);
-            /* Font font = new Font(selectedFont, Font.PLAIN, selectedFontSize);
-            gui.textArea.setFont(font); */
         }
     }
 
@@ -104,14 +100,15 @@ public class FormatFunction
         // если был выделен текст
         if (selectedText != null)
         {
-            doc = gui.textArea.getStyledDocument();
+            // Создание стиля для изменения цвета только выделенного текста
+            StyledDocument doc = gui.textArea.getStyledDocument();
+            Style style = doc.addStyle("newStyle", null);
+
             // Получение начала и конца выделенного текста
             int start = gui.textArea.getSelectionStart();
             int end = gui.textArea.getSelectionEnd();
             // Получение StyledDocument
             
-            // Создание стиля для изменения цвета только выделенного текста
-            style = doc.addStyle("newStyle", null);
             if (selectedColor != null)
             {
                 if (isTextColor)
@@ -130,30 +127,24 @@ public class FormatFunction
         // если никакая часть текста не была выделена
         else if (selectedText == null)
         {
-            doc = gui.textArea.getStyledDocument();
-            int caret = gui.textArea.getCaretPosition();
-
             if (selectedColor != null)
             {
+                StyledDocument doc = gui.textArea.getStyledDocument();
+                // создание нового стиля
+                Style style = doc.addStyle("NewColorStyle", null);
+
                 if (isTextColor)
                 {
-                    style = doc.addStyle("newStyle", null);
                     StyleConstants.setForeground(style, selectedColor);
-                    // Установка атрибутов абзаца, начиная с позиции каретки и до конца документа
-                    doc.setParagraphAttributes(caret, doc.getLength() - caret, style, false);
                 }
-
                 else
                 {
-                    style = doc.addStyle("newStyle", null);
                     StyleConstants.setBackground(style, selectedColor);
-                    doc.setParagraphAttributes(0, doc.getLength() - caret, style, false);
-
-                    // Установка цвет фона для новых символов
-                    MutableAttributeSet attrs = new SimpleAttributeSet();
-                    StyleConstants.setBackground(attrs, selectedColor);
-                    gui.textArea.setCharacterAttributes(attrs, isTextColor);
                 }
+                // установка свойств для нового вводимого текста
+                MutableAttributeSet attrs = gui.textArea.getInputAttributes();
+                attrs.removeAttributes(attrs);
+                attrs.addAttributes(style);
             }
         }
 
@@ -175,7 +166,8 @@ public class FormatFunction
     public void resetText()
     {
         int caret = gui.textArea.getCaretPosition();
-        doc = gui.textArea.getStyledDocument();
+        StyledDocument doc = gui.textArea.getStyledDocument();
+        Style style = doc.addStyle("newStyle", null);
 
         // Сброс цвета текста на значение по умолчанию
         StyleConstants.setForeground(style, Color.BLACK);
