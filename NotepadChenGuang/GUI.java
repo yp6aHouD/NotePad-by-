@@ -11,6 +11,9 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
+import javax.swing.event.UndoableEditEvent;
+import javax.swing.event.UndoableEditListener;
+import javax.swing.undo.UndoManager;
 
 
 public class GUI implements ActionListener
@@ -28,7 +31,7 @@ public class GUI implements ActionListener
     JMenuBar menuBar;
     JMenu fileMenu, editMenu, formatMenu;
     JMenuItem fNew, fOpen, fSave, fSaveAs, fExit,
-    eCut, eCopy, ePaste, eFind,
+    eUndo, eRedo, eCut, eCopy, ePaste, eFind,
     fFontAndSize, fTextColor, fTextHighlightColor,fBackgroundColor;
     
     // Buttons resetText and quickHighlight
@@ -38,6 +41,9 @@ public class GUI implements ActionListener
     // Functions for frame
     FileFunction fileFunction = new FileFunction(this);
     FormatFunction formatFunction = new FormatFunction(this);
+    EditFunction editFunction = new EditFunction(this);
+
+    UndoManager um = new UndoManager();
 
     // Constructor
     public GUI()
@@ -65,6 +71,15 @@ public class GUI implements ActionListener
     public void createTextPane()
     {
         textArea = new JTextPane();
+
+        // Добавление undo/redo
+        textArea.getDocument().addUndoableEditListener(new UndoableEditListener() {
+            public void undoableEditHappened(UndoableEditEvent e)
+            {
+                um.addEdit(e.getEdit());
+            }
+        });
+
         scrollPane = new JScrollPane(textArea, 
             JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
             JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -134,6 +149,16 @@ public class GUI implements ActionListener
 
     public void createEditMenu()
     {
+        eUndo = new JMenuItem("Undo");
+        eUndo.addActionListener(this);
+        eUndo.setActionCommand("Undo");
+        editMenu.add(eUndo);
+
+        eRedo = new JMenuItem("Redo");
+        eRedo.addActionListener(this);
+        eRedo.setActionCommand("Redo");
+        editMenu.add(eRedo);
+
         eCut = new JMenuItem("Cut");
         eCut.addActionListener(this);
         eCut.setActionCommand("Cut");
@@ -209,6 +234,18 @@ public class GUI implements ActionListener
                 formatFunction.resetText(); break;
             case "QuickHighlight":
                 formatFunction.quickHighlight(); break;
+            case "Undo":
+                editFunction.undo(); break;
+            case "Redo":
+                editFunction.redo(); break;
+            case "Cut":
+                editFunction.cut(); break;
+            case "Copy":
+                editFunction.copy(); break;
+            case "Paste":
+                editFunction.paste(); break;
+            case "Find":
+                editFunction.find(); break;
         }
     }
 

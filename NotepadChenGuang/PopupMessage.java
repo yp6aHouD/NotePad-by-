@@ -10,10 +10,9 @@ import javax.swing.border.EmptyBorder;
 
 public class PopupMessage extends JWindow 
 {
-    private static final int FADE_TIME = 2500; // время исчезновения в миллисекундах
-
-    GUI gui;
-    JLabel label;
+    // время исчезновения в миллисекундах
+    private static final int FADE_TIME = 1000; 
+    private JLabel label;
 
     public PopupMessage(GUI gui, String message) 
     {
@@ -21,7 +20,9 @@ public class PopupMessage extends JWindow
         
         // Добавление сообщения
         label = new JLabel(message, SwingConstants.CENTER);
-        label.setBorder(new EmptyBorder(1, 10, 1, 10)); // Добавление отступов
+
+        // Добавление отступов
+        label.setBorder(new EmptyBorder(1, 10, 1, 10)); 
         add(label);
 
         // Установка размера окна под содержимое

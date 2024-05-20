@@ -18,10 +18,10 @@ import javax.swing.text.StyledDocument;
 public class FormatFunction
 {
     private GUI gui;
-    private PopupMessage popupMessage;
     private static String selectedFont;
     private static String selectedFontStyle;
     private static int selectedFontSize;
+    private PopupMessage popupMessage;
 
     public FormatFunction(GUI gui)
     {
@@ -257,6 +257,10 @@ public class FormatFunction
 
             // Применение стиля
             doc.setCharacterAttributes(start, end - start, attrs, false);
+
+            // уведомление
+            popupMessage = new PopupMessage(gui, "Text highlighted!");
+            popupMessage.setVisible(true);
         }
         else return;
     }
@@ -272,7 +276,7 @@ public class FormatFunction
         StyleConstants.setForeground(style, Color.BLACK);
         doc.setParagraphAttributes(caret, doc.getLength() - caret, style, false);
 
-        // Сброс цвета фона на значение по умолчанию
+        // Создание новых атрибутов текста
         MutableAttributeSet attrs = new SimpleAttributeSet();
         StyleConstants.setBackground(attrs, gui.textArea.getBackground());
 
@@ -280,8 +284,13 @@ public class FormatFunction
         StyleConstants.setFontFamily(attrs, "Default");
         StyleConstants.setFontSize(attrs, 13);
 
+        // Сброс цвета текста и фона на 
         gui.textArea.setCharacterAttributes(attrs, true);
         StyleConstants.setBackground(style, gui.textArea.getBackground());
         doc.setParagraphAttributes(caret, doc.getLength() - caret, style, false);
+
+        // уведомление
+        popupMessage = new PopupMessage(gui, "Text settings has been reset!");
+        popupMessage.setVisible(true);
     }
 }
