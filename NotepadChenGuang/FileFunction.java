@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import javax.swing.text.Document;
 
+// TODO: realise hotkeys
+
 public class FileFunction
 {
     private Document d;

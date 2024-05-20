@@ -1,5 +1,7 @@
 package NotepadChenGuang;
 
+// TODO: realise hotkeys
+
 public class EditFunction 
 {
     private GUI gui;

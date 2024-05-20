@@ -15,6 +15,8 @@ import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
+// TODO: realise hotkeys
+
 public class FormatFunction
 {
     private GUI gui;
@@ -27,7 +29,6 @@ public class FormatFunction
     {
         this.gui = gui;
     }
-
 
     //установка шрифта и размера
     public void setTextFontAndSize() 
