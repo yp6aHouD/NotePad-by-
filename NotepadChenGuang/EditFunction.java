@@ -1,6 +1,6 @@
 package NotepadChenGuang;
 
-// TODO: realise hotkeys
+// TODO: make hotkeys
 
 public class EditFunction 
 {
@@ -36,6 +36,7 @@ public class EditFunction
 
         if (selectedText != null)
         {
+            gui.textArea.copy();
             gui.textArea.replaceSelection("");
         }
         else 

@@ -45,6 +45,8 @@ public class GUI implements ActionListener
 
     UndoManager um = new UndoManager();
 
+    // TODO: make right mouse click menu
+    
     // Constructor
     public GUI()
     {

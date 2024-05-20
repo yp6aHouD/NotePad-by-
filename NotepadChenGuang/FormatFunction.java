@@ -15,7 +15,7 @@ import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
-// TODO: realise hotkeys
+// TODO: make hotkeys
 
 public class FormatFunction
 {
