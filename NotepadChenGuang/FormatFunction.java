@@ -23,7 +23,6 @@ public class FormatFunction
     private static String selectedFont;
     private static String selectedFontStyle;
     private static int selectedFontSize;
-    private PopupMessage popupMessage;
 
     public FormatFunction(GUI gui)
     {
@@ -260,8 +259,8 @@ public class FormatFunction
             doc.setCharacterAttributes(start, end - start, attrs, false);
 
             // уведомление
-            popupMessage = new PopupMessage(gui, "Text highlighted!");
-            popupMessage.setVisible(true);
+            gui.currentPopup = new PopupMessage(gui, "Text highlighted!");
+            gui.currentPopup.setVisible(true);
         }
         else return;
     }
@@ -291,7 +290,7 @@ public class FormatFunction
         doc.setParagraphAttributes(caret, doc.getLength() - caret, style, false);
 
         // уведомление
-        popupMessage = new PopupMessage(gui, "Text settings has been reset!");
-        popupMessage.setVisible(true);
+        gui.currentPopup = new PopupMessage(gui, "Text settings has been reset!");
+        gui.currentPopup.setVisible(true);
     }
 }

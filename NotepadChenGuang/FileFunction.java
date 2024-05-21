@@ -6,14 +6,11 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import javax.swing.text.Document;
 
-// TODO: make hotkeys
-
 public class FileFunction
 {
     private Document d;
     private GUI gui;
     private String fileName, fileAddress;
-    private PopupMessage popupMessage;
 
     private boolean isNewFile = true;
 
@@ -34,8 +31,8 @@ public class FileFunction
         gui.textArea.setText("");
         gui.window.setTitle(("New"));
 
-        popupMessage = new PopupMessage(gui, "File Created!");
-        popupMessage.setVisible(true);
+        gui.currentPopup = new PopupMessage(gui, "File Created!");
+        gui.currentPopup.setVisible(true);
     }
     
     public void openFile()
@@ -52,8 +49,8 @@ public class FileFunction
         }
         else 
         {
-            popupMessage = new PopupMessage(gui, "File wasn't opened!");
-            popupMessage.setVisible(true);
+            gui.currentPopup = new PopupMessage(gui, "File wasn't opened!");
+            gui.currentPopup.setVisible(true);
             return;
         }
 
@@ -72,8 +69,8 @@ public class FileFunction
         }
         catch (Exception e)
         {
-            popupMessage = new PopupMessage(gui, "Exception when opening file!\n" + e.toString());
-            popupMessage.setVisible(true);
+            gui.currentPopup = new PopupMessage(gui, "Exception when opening file!\n" + e.toString());
+            gui.currentPopup.setVisible(true);
         }
     }
 
@@ -90,13 +87,13 @@ public class FileFunction
                 FileWriter fw = new FileWriter(fileAddress + fileName);
                 fw.write(gui.textArea.getText());
                 fw.close();
-                popupMessage = new PopupMessage(gui, "File Saved!");
-                popupMessage.setVisible(true);
+                gui.currentPopup = new PopupMessage(gui, "File Saved!");
+                gui.currentPopup.setVisible(true);
             }
             catch (Exception e)
             {
-                popupMessage = new PopupMessage(gui, "Exception when saving file!\n" + e.toString());
-                popupMessage.setVisible(true);
+                gui.currentPopup = new PopupMessage(gui, "Exception when saving file!\n" + e.toString());
+                gui.currentPopup.setVisible(true);
             }
         }
     }
@@ -114,8 +111,8 @@ public class FileFunction
         }
         else
         {
-            popupMessage = new PopupMessage(gui, "File wasn't saved!");
-            popupMessage.setVisible(true);
+            gui.currentPopup = new PopupMessage(gui, "File wasn't saved!");
+            gui.currentPopup.setVisible(true);
             return;
         }
 
@@ -124,13 +121,13 @@ public class FileFunction
             FileWriter fw = new FileWriter(fileAddress + fileName);
             fw.write(gui.textArea.getText());
             fw.close();
-            popupMessage = new PopupMessage(gui, "File saved!");
-            popupMessage.setVisible(true);
+            gui.currentPopup = new PopupMessage(gui, "File saved!");
+            gui.currentPopup.setVisible(true);
         }
         catch (Exception e)
         {
-            popupMessage = new PopupMessage(gui, "Exception when saving file!\n" + e.toString());
-            popupMessage.setVisible(true);
+            gui.currentPopup = new PopupMessage(gui, "Exception when saving file!\n" + e.toString());
+            gui.currentPopup.setVisible(true);
         }
     }
 

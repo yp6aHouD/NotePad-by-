@@ -1,22 +1,10 @@
 package NotepadChenGuang;
 
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.*;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 
@@ -25,7 +13,6 @@ public class SearchFunction implements ActionListener, KeyListener
     private GUI gui;
     private JDialog findReplaceDialog;
     private JTextField searchField, replaceField;
-    private PopupMessage popupMessage;
     private JButton closeButton, searchButton, replaceButton,
         prevButton, nextButton;
     private JLabel searchLabel, counterLabel;
@@ -181,8 +168,8 @@ public class SearchFunction implements ActionListener, KeyListener
             if (indices.isEmpty()) 
             {
                 counterLabel.setText("0/0");
-                popupMessage = new PopupMessage(gui, "No matches found!");
-                popupMessage.setVisible(true);
+                gui.currentPopup = new PopupMessage(gui, "No matches found!");
+                gui.currentPopup.setVisible(true);
             } 
 
             else 
@@ -201,20 +188,20 @@ public class SearchFunction implements ActionListener, KeyListener
 
         else if (word.equals(""))
         {
-            popupMessage = new PopupMessage(gui, "You did'nt enter anything to search!");
-            popupMessage.setVisible(true);
+            gui.currentPopup = new PopupMessage(gui, "You did'nt enter anything to search!");
+            gui.currentPopup.setVisible(true);
         }
 
         else if (text.equals(""))
         {
-            popupMessage = new PopupMessage(gui, "There's no text to search!");
-            popupMessage.setVisible(true);
+            gui.currentPopup = new PopupMessage(gui, "There's no text to search!");
+            gui.currentPopup.setVisible(true);
         }
 
         else
         {
-            popupMessage = new PopupMessage(gui, "Search error");
-            popupMessage.setVisible(true);
+            gui.currentPopup = new PopupMessage(gui, "Search error");
+            gui.currentPopup.setVisible(true);
         }
     }
 
@@ -293,14 +280,14 @@ public class SearchFunction implements ActionListener, KeyListener
 
             else
             {
-                popupMessage = new PopupMessage(gui, "There's no text to replace");
-                popupMessage.setVisible(true);
+                gui.currentPopup = new PopupMessage(gui, "There's no text to replace");
+                gui.currentPopup.setVisible(true);
             }
         }
         else
         {
-            popupMessage = new PopupMessage(gui, "There's no text to replace or no text to enter replaced text");
-            popupMessage.setVisible(true);
+            gui.currentPopup = new PopupMessage(gui, "There's no text to replace or no text to enter replaced text");
+            gui.currentPopup.setVisible(true);
         }
     }
 

@@ -3,18 +3,12 @@ package NotepadChenGuang;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JScrollPane;
-import javax.swing.JTextPane;
+import javax.swing.*;
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
 import javax.swing.undo.UndoManager;
 
+// TODO: сделать вкладки с разными файлами, чтобы можно было открывать несколько за раз
 
 public class GUI implements ActionListener
 {
@@ -22,8 +16,7 @@ public class GUI implements ActionListener
     JFrame window;
 
     // Popup message
-    PopupMessage popupMessage;
-
+    PopupMessage currentPopup;
     // TextArea
     JTextPane textArea;
     JScrollPane scrollPane;
@@ -42,11 +35,11 @@ public class GUI implements ActionListener
     FileFunction fileFunction = new FileFunction(this);
     FormatFunction formatFunction = new FormatFunction(this);
     EditFunction editFunction = new EditFunction(this);
-
+    HotkeyHandler hotkeyHandler = new HotkeyHandler(this);
     UndoManager um = new UndoManager();
 
     // TODO: make right mouse click menu
-    
+
     // Constructor
     public GUI()
     {
@@ -64,7 +57,7 @@ public class GUI implements ActionListener
     public void createWindow()
     {
         window = new JFrame("NotePad by Neliubin Daniil");
-        window.setSize(800, 600);
+        window.setSize(650, 450);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setLocationRelativeTo(null);
     }
@@ -73,6 +66,7 @@ public class GUI implements ActionListener
     public void createTextPane()
     {
         textArea = new JTextPane();
+        textArea.addKeyListener(hotkeyHandler);
 
         // Добавление undo/redo
         textArea.getDocument().addUndoableEditListener(new UndoableEditListener() {
@@ -207,6 +201,7 @@ public class GUI implements ActionListener
         formatMenu.add(fBackgroundColor);
     }
 
+    // Обработка нажатия кнопок меню
     @Override
     public void actionPerformed(ActionEvent e)
     {

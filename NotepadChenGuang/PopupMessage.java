@@ -16,6 +16,11 @@ public class PopupMessage extends JWindow
 
     public PopupMessage(GUI gui, String message) 
     {
+        if (gui.currentPopup != null) 
+        {
+            gui.currentPopup.dispose();
+        }
+
         setAlwaysOnTop(true);
         
         // Добавление сообщения

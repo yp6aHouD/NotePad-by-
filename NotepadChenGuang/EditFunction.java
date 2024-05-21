@@ -1,11 +1,8 @@
 package NotepadChenGuang;
 
-// TODO: make hotkeys
-
 public class EditFunction 
 {
     private GUI gui;
-    private PopupMessage popupMessage;
 
     public EditFunction(GUI gui)
     {
@@ -16,16 +13,16 @@ public class EditFunction
     public void undo()
     {
         gui.um.undo();
-        popupMessage = new PopupMessage(gui, "Undo");
-        popupMessage.setVisible(true);
+        gui.currentPopup = new PopupMessage(gui, "Undo");
+        gui.currentPopup.setVisible(true);
     }
 
     // Функция "возврат вперёд"
     public void redo()
     {
         gui.um.redo();
-        popupMessage = new PopupMessage(gui, "Redo");
-        popupMessage.setVisible(true);
+        gui.currentPopup = new PopupMessage(gui, "Redo");
+        gui.currentPopup.setVisible(true);
     }
 
 
@@ -41,8 +38,8 @@ public class EditFunction
         }
         else 
         {
-            popupMessage = new PopupMessage(gui, "No text selected");
-            popupMessage.setVisible(true);
+            gui.currentPopup = new PopupMessage(gui, "No text selected");
+            gui.currentPopup.setVisible(true);
         }
     }
 
@@ -57,8 +54,8 @@ public class EditFunction
         }
         else
         {
-            popupMessage = new PopupMessage(gui, "No text selected");
-            popupMessage.setVisible(true);
+            gui.currentPopup = new PopupMessage(gui, "No text selected");
+            gui.currentPopup.setVisible(true);
         }
     }
 
