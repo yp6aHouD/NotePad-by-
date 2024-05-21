@@ -17,9 +17,11 @@ public class GUI implements ActionListener
 
     // Popup message
     PopupMessage currentPopup;
+    
     // TextArea
     JTextPane textArea;
     JScrollPane scrollPane;
+
     // Top Menu Bar
     JMenuBar menuBar;
     JMenu fileMenu, editMenu, formatMenu;
