@@ -1,4 +1,4 @@
-package NotepadChenGuang;
+package GuangNotepad;
 
 import java.awt.Dimension;
 import java.awt.Point;

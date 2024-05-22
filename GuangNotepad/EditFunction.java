@@ -1,4 +1,4 @@
-package NotepadChenGuang;
+package GuangNotepad;
 
 public class EditFunction 
 {

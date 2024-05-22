@@ -1,4 +1,4 @@
-package NotepadChenGuang;
+package GuangNotepad;
 
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;

@@ -1,4 +1,4 @@
-package NotepadChenGuang;
+package GuangNotepad;
 
 import java.awt.Color;
 import java.awt.GraphicsEnvironment;
