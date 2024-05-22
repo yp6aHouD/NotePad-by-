@@ -260,9 +260,4 @@ public class GUI implements ActionListener
                 editFunction.find(); break;
         }
     }
-
-    public static void main(String[] args)
-    {
-        new GUI();
-    }
 }

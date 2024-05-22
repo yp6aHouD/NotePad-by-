@@ -8,7 +8,7 @@
             "type": "java",
             "name": "Launch Notepad",
             "request": "launch",
-            "mainClass": "NotepadChenGuang.GUI",
+            "mainClass": "GuangNotepad.Main",
             "projectName": "NotePadChenGuang_a5354251"
         }
     ]
