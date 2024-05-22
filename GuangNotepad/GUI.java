@@ -130,28 +130,28 @@ public class GUI implements ActionListener
 
     public void createFileMenu()
     {
-        fNew = new JMenuItem("New");
+        fNew = new JMenuItem("<html>New<span style='color: gray;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ctrl+N</span></html>");
         fNew.addActionListener(this);
         fNew.setActionCommand("New");
         fileMenu.add(fNew);
         
-        fOpen = new JMenuItem("Open");
+        fOpen = new JMenuItem("<html>Open<span style='color: gray;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ctrl+O</span></html>");
         fOpen.addActionListener(this);
         fOpen.setActionCommand("Open");
         fileMenu.add(fOpen);
 
-        fSave = new JMenuItem("Save");
+        fSave = new JMenuItem("<html>Save<span style='color: gray;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ctrl+S</span></html>");
         fSave.addActionListener(this);
         fSave.setActionCommand("Save");
         fileMenu.add(fSave);
 
-        fSaveAs = new JMenuItem("Save as");
+        fSaveAs = new JMenuItem("<html>Save as<span style='color: gray;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ctrl+Shift+S</span></html>");
         fSaveAs.addActionListener(this);
         fSaveAs.setActionCommand("SaveAs");
         fileMenu.add(fSaveAs);
         fileMenu.addSeparator();
 
-        fExit = new JMenuItem("Exit");
+        fExit = new JMenuItem("<html>Exit<span style='color: gray;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Alt + F4</span></html>");
         fExit.addActionListener(this);
         fExit.setActionCommand("Exit");
         fileMenu.add(fExit);
@@ -160,33 +160,33 @@ public class GUI implements ActionListener
 
     public void createEditMenu()
     {
-        eUndo = new JMenuItem("Undo");
+        eUndo = new JMenuItem("<html>Undo<span style='color: gray;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ctrl + Z</span></html>");
         eUndo.addActionListener(this);
         eUndo.setActionCommand("Undo");
         editMenu.add(eUndo);
 
-        eRedo = new JMenuItem("Redo");
+        eRedo = new JMenuItem("<html>Redo<span style='color: gray;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ctrl + Shift + Z</span></html>");
         eRedo.addActionListener(this);
         eRedo.setActionCommand("Redo");
         editMenu.add(eRedo);
 
-        eCut = new JMenuItem("Cut");
+        eCut = new JMenuItem("<html>Cut<span style='color: gray;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ctrl + X</span></html>");
         eCut.addActionListener(this);
         eCut.setActionCommand("Cut");
         editMenu.add(eCut);
         
-        eCopy = new JMenuItem("Copy");
+        eCopy = new JMenuItem("<html>Copy<span style='color: gray;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ctrl + C</span></html>");
         eCopy.addActionListener(this);
         eCopy.setActionCommand("Copy");
         editMenu.add(eCopy);
         
-        ePaste = new JMenuItem("Paste");
+        ePaste = new JMenuItem("<html>Paste<span style='color: gray;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ctrl + V</span></html>");
         ePaste.addActionListener(this);
         ePaste.setActionCommand("Paste");
         editMenu.add(ePaste);
         editMenu.addSeparator();
 
-        eFind = new JMenuItem("Find");
+        eFind = new JMenuItem("<html>Find<span style='color: gray;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ctrl + F</span></html>");
         eFind.addActionListener(this);
         eFind.setActionCommand("Find");
         editMenu.add(eFind);
@@ -194,23 +194,23 @@ public class GUI implements ActionListener
 
     public void createFormatMenu()
     {
-        fFontAndSize = new JMenuItem("Font and size");
+        fFontAndSize = new JMenuItem("<html>Font<span style='color: gray;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ctrl+Shift+T</span></html>");
         fFontAndSize.addActionListener(this);
         fFontAndSize.setActionCommand("FontAndSize");
         formatMenu.add(fFontAndSize);     
         
-        fTextColor = new JMenuItem("Text color");
+        fTextColor = new JMenuItem("<html>Text color<span style='color: gray;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ctrl+Shift+C</span></html>");
         fTextColor.addActionListener(this);
         fTextColor.setActionCommand("SetTextColor");
         formatMenu.add(fTextColor);
 
-        fTextHighlightColor = new JMenuItem("Highlight text");
+        fTextHighlightColor = new JMenuItem("<html>Text highlight<span style='color: gray;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ctrl+B</span></html>");
         fTextHighlightColor.addActionListener(this);
         fTextHighlightColor.setActionCommand("SetTextHighlight");
         formatMenu.add(fTextHighlightColor);
         formatMenu.addSeparator();
 
-        fBackgroundColor = new JMenuItem("Background color");
+        fBackgroundColor = new JMenuItem("<html>Area color<span style='color: gray;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ctrl+Shift+B</span></html>");
         fBackgroundColor.addActionListener(this);
         fBackgroundColor.setActionCommand("SetBackground");
         formatMenu.add(fBackgroundColor);
