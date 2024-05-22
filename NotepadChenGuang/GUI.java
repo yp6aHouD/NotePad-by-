@@ -45,13 +45,25 @@ public class GUI implements ActionListener
     // Constructor
     public GUI()
     {
+        // Create window
         createWindow();
+
+        // Create text area
         createTextPane();
+
+        // Create menu bar
         createMenuBar();
+
+        // Create menu "File"
         createFileMenu();
+
+        // Create menu "Edit"
         createEditMenu();
+
+        // Create menu "Format"
         createFormatMenu();
         
+        // Set window visible
         window.setVisible(true);
     }
 
@@ -78,6 +90,7 @@ public class GUI implements ActionListener
             }
         });
 
+        // Создание и добавление scrollbar
         scrollPane = new JScrollPane(textArea, 
             JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
             JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);

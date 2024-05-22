@@ -34,8 +34,8 @@ public class HotkeyHandler implements KeyListener
                 case KeyEvent.VK_C: gui.editFunction.copy(); break; // копировать
                 case KeyEvent.VK_V: gui.editFunction.paste(); break; // вставить
                 case KeyEvent.VK_F: gui.editFunction.find(); break; // найти
-                case KeyEvent.VK_B: gui.formatFunction.setTextColor(false); break; // быстрое выделение
-                case KeyEvent.VK_R: gui.formatFunction.resetText(); break; // сброс
+                case KeyEvent.VK_B: gui.formatFunction.setTextColor(false); break; // изменить фон символов
+                case KeyEvent.VK_R: gui.formatFunction.resetText(); break; // быстрый сброс
                 default: break;
             }
         }

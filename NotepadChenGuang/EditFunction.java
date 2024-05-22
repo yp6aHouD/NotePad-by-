@@ -51,6 +51,8 @@ public class EditFunction
         if (selectedText != null)
         {
             gui.textArea.copy();
+            gui.currentPopup = new PopupMessage(gui, "Copied!");
+            gui.currentPopup.setVisible(true);
         }
         else
         {
@@ -62,7 +64,14 @@ public class EditFunction
     // Функция вставки
     public void paste()
     {
+        // сохраняем текущую позицию курсора
+        int position = gui.textArea.getCaretPosition(); 
+
+        // вставляем текст
         gui.textArea.paste();
+
+        // устанавливаем позицию курсора в конец вставленного текста
+        gui.textArea.setCaretPosition(position + gui.textArea.getSelectedText().length());
     }
 
     // Функция поиска
