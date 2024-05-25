@@ -15,8 +15,9 @@ import javax.swing.text.*;
  */
 
 
-// Menu "Format" function class
+// "Format" menu class
 // 功能"字体和大小"的类
+
 public class FormatFunction
 {
     private GUI gui;
@@ -47,7 +48,7 @@ public class FormatFunction
         {
             selectedFontStyle = "Default";
         }
-
+        
         // Getting and creating a dropdown list with fonts
         // 获取并创建一个带有字体的下拉列表
         String[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
@@ -156,8 +157,8 @@ public class FormatFunction
             StyleConstants.setFontFamily(style, selectedFont);
             StyleConstants.setFontSize(style, selectedFontSize);
 
-            // switch for setting the text style
-            // switch用于设置文本样式
+            // Switch for setting the text style
+            // 用Switch于设置文本样式
             switch (selectedFontStyle) 
             {
                 case "Bold":

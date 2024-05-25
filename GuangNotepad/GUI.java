@@ -3,11 +3,16 @@ package GuangNotepad;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.event.DocumentListener;
+import javax.swing.event.DocumentEvent;
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
 import javax.swing.undo.UndoManager;
 
 // TODO: сделать вкладки с разными файлами, чтобы можно было открывать несколько за раз
+
+// GUI class
+// GUI 类
 
 public class GUI implements ActionListener
 {
@@ -77,7 +82,7 @@ public class GUI implements ActionListener
         
         // Set window visible
         // 设置窗口可见
-        window.setVisible(true);
+        window.setVisible(true); 
     }
 
     // Create window method 
@@ -86,8 +91,19 @@ public class GUI implements ActionListener
     {
         window = new JFrame("NotePad by Neliubin Daniil");
         window.setSize(650, 450);
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         window.setLocationRelativeTo(null);
+
+        // Add window listener to replace default closing operation
+        // 添加窗口监听器以替换默认关闭操作
+        window.addWindowListener(new WindowAdapter() 
+        {
+            @Override
+            public void windowClosing(WindowEvent e)
+            {
+                fileFunction.exit();
+            }
+        });
     }
 
     // Create text area method
@@ -123,6 +139,45 @@ public class GUI implements ActionListener
 
         this.scrollPane.setBorder(BorderFactory.createEmptyBorder());
         window.add(scrollPane);
+
+        // Add a document listener to the text area
+        // 为文本区域添加文档监听器
+        textArea.getDocument().addDocumentListener(new DocumentListener() 
+        {
+            // Method for tracking text area changes
+            // 跟踪文本区域变化的方法
+            public void change() 
+            {
+                // Set isSaved to false when the text area is changed
+                // 当文本区域发生变化时，将isSaved设置为false
+                fileFunction.isSaved = false;
+
+                // Setting Modified in the title of the window when the text area is changed
+                // 当文本区域发生变化时，在窗口的标题中设置"Modified"
+                if (!window.getTitle().endsWith(" — Modified"))
+                {
+                    window.setTitle(window.getTitle() + " — Modified");
+                }
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e)
+            {
+                change();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e)
+            {
+                change();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e)
+            {
+                change();
+            }
+        });
     }
 
     // Create menu bar method
@@ -214,7 +269,6 @@ public class GUI implements ActionListener
         fExit.addActionListener(this);
         fExit.setActionCommand("Exit");
         fileMenu.add(fExit);
-
     }
 
     // Creating menu "Edit" method

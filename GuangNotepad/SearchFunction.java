@@ -8,6 +8,10 @@ import javax.swing.*;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 
+
+// Class for search functionality
+// 搜索功能类
+
 public class SearchFunction implements ActionListener, KeyListener
 {
     private GUI gui;
@@ -19,50 +23,60 @@ public class SearchFunction implements ActionListener, KeyListener
     private List<Integer> indices;
     private int currentIndex;
 
+    // Constructor
+    // 构造函数
     public SearchFunction(GUI gui)
     {
         this.gui = gui;
 
-        // Создаем окно и расположение объектов
+        // Get the location of the menu bar and its size
+        // 获取菜单栏的位置和大小
         Point location = gui.menuBar.getLocationOnScreen();
         Dimension screenSize = gui.menuBar.getSize();
         findReplaceDialog = new JDialog(gui.window, false);
         GridBagLayout dialogLayout = new GridBagLayout();
 
-        // Задаем размер и стандартные настройки окна
+        // Set the size and default settings of the window
+        // 设置窗口的大小和默认设置
         findReplaceDialog.setLayout(dialogLayout);
         findReplaceDialog.setSize(250, 150);
         findReplaceDialog.setUndecorated(true);
         findReplaceDialog.setLocationRelativeTo(gui.menuBar);
         
-        // Устанавливаем изначальное положение окна
+        // Set the window to the top right corner
+        // 设置窗口在右上角
         findReplaceDialog.setLocation(location.x + screenSize.width - 
             findReplaceDialog.getWidth() - 10, location.y + 40);
 
-        // Создание кнопки для закрытия окна поиска
+        // Create a button to close the search window
+        // 创建一个按钮来关闭搜索窗口
         closeButton = new JButton("X");
         Dimension closeButtonSize = new Dimension(15, 15);
         closeButton.setPreferredSize(closeButtonSize);
         closeButton.addActionListener(this);
         closeButton.setActionCommand("Close");
 
-        // Создаем объект GridBagConstraints
+        // Create a GridBagConstraints object for layout
+        // 创建一个GridBagConstraints对象
         GridBagConstraints gbc = new GridBagConstraints();
 
-        // Устанавливаем метку поиска
+        // Set the search label
+        // 设置搜索标签
         searchLabel = new JLabel("Search in the text");
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.anchor = GridBagConstraints.NORTH;
         findReplaceDialog.add(searchLabel, gbc);
 
-        // Устанавливаем кнопку выхода в верхний правый угол
+        //Set the exit button in the top right corner
+        // 设置退出按钮在右上角
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.anchor = GridBagConstraints.NORTHEAST;
         findReplaceDialog.add(closeButton, gbc);
         
-        // Создаем поля ввода и кнопки поиска и замены
+        // Create input fields and search and replace buttons
+        // 创建输入字段和搜索和替换按钮
         searchField = new JTextField(10);
         searchField.addKeyListener(this);
 
@@ -81,7 +95,8 @@ public class SearchFunction implements ActionListener, KeyListener
         nextButton.addActionListener(this);
         nextButton.setActionCommand("Next");
 
-        // панель для помещения 2 объектов в 1 ячейку
+        // Create a panel for the counter label and prev button
+        // 创建一个面板用于计数器标签和上一个按钮
         JPanel panel = new JPanel();
         counterLabel = new JLabel("0/0");
         prevButton = new JButton("Prev");
@@ -91,10 +106,12 @@ public class SearchFunction implements ActionListener, KeyListener
         prevButton.addActionListener(this);
         prevButton.setActionCommand("Prev");
 
-        // Сбрасываем значения GridBagConstraints
+        // Resetting the GridBagConstraints values
+        // 重置GridBagConstraints值
         gbc.anchor = GridBagConstraints.WEST;
 
-        // Поле поиска и кнопка "Search"
+        // Search field and "Search" button
+        // 搜索字段和"搜索"按钮
         gbc.gridx = 0;
         gbc.gridy = 1;
         findReplaceDialog.add(searchField, gbc);
@@ -102,7 +119,8 @@ public class SearchFunction implements ActionListener, KeyListener
         gbc.gridx = 1;
         findReplaceDialog.add(searchButton, gbc);
 
-        // панель с кнопкой prev и счетчиком + кнопка next
+        // Panel with prev button and counter + next button
+        // 面板与上一个按钮和计数器+下一个按钮
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.anchor = GridBagConstraints.EAST;
@@ -112,7 +130,8 @@ public class SearchFunction implements ActionListener, KeyListener
         gbc.anchor = GridBagConstraints.WEST;
         findReplaceDialog.add(nextButton, gbc);
 
-        // Поле замены и кнопка "Replace"
+        // Replace field and "Replace" button
+        // 替换字段和“替换”按钮
         gbc.gridx = 0;
         gbc.gridy = 3;
         findReplaceDialog.add(replaceField, gbc);
@@ -122,7 +141,8 @@ public class SearchFunction implements ActionListener, KeyListener
 
 
 
-        // Обработка перемещения окна при перемещении родительского
+        // Handling window movement when parent window is moved
+        // 处理父窗口移动时的窗口移动
         gui.window.addComponentListener(new ComponentAdapter() 
         {
             // Прописываем, как будет вести себя окно при сдвиге родительского компонента
@@ -135,26 +155,37 @@ public class SearchFunction implements ActionListener, KeyListener
             }
         });
 
-        // Отображаем окно
+        // Display the window
+        // 显示窗口
         findReplaceDialog.setVisible(true);
 
-        // Устанавливаем каретку в поле поиска
+        // Set the focus on the search field
+        // 设置焦点在搜索字段上
         searchField.requestFocusInWindow();
 
-        // Добавляем слушатель для поля ввода текста после создания окна
+        // Add a listener for the text input field after creating the window
+        // 为文本输入字段创建窗口后添加侦听器
         gui.textArea.addKeyListener(this);
     }
 
-    // Функция поиска
+    // Search method
+    // 搜索方法
     public void performSearch()
     {
-        String text = gui.textArea.getText(); // текст, в котором ищем
-        String word = searchField.getText(); // слово, которое ищем
+        // Get the text to search in
+        // 获取要搜索的文本
+        String text = gui.textArea.getText();
+
+        // Get the word to search for
+        // 获取要搜索的单词
+        String word = searchField.getText();
         
-        // Список для хранения индексов всех вхождений
+        // List to store the indices of all occurrences
+        // 用于存储所有出现的索引的列表
         indices = new ArrayList<>();
 
-        // Ищем все вхождения слова в текст
+        // Search for all occurrences of the word in the text
+        // 在文本中搜索单词的所有出现
         if (!word.equals("") && !text.equals(""))
         {
             currentIndex = text.indexOf(word);
@@ -164,7 +195,9 @@ public class SearchFunction implements ActionListener, KeyListener
                 currentIndex = text.indexOf(word, currentIndex + 1);
             }
             currentIndex = 0;
-            // Если вхождений нет, показываем всплывающее сообщение
+
+            // If there are no matches, show a popup message
+            // 如果没有匹配项，则显示弹出消息
             if (indices.isEmpty()) 
             {
                 counterLabel.setText("0/0");
@@ -172,32 +205,43 @@ public class SearchFunction implements ActionListener, KeyListener
                 gui.currentPopup.setVisible(true);
             } 
 
+            // If there is match, select first one
+            // 如果有匹配项，则选择第一个
             else 
             {
-                // Обновляем counterLabel
+                // Update the counterLabel
+                // 更新counterLabel
                 counterLabel.setText("1/" + indices.size());
                 
-                // Устанавливаем курсор на первое вхождение
+                // Set the cursor to the first occurrence
+                // 将光标设置为第一次出现
                 gui.textArea.setCaretPosition(indices.get(0));
                 
-                // Выделяем найденное слово
+                // Highlight the found word
+                // 高亮显示找到的单词
                 gui.textArea.setSelectionStart(indices.get(0));
                 gui.textArea.setSelectionEnd(indices.get(0) + word.length());
             }
         }
 
+        // If the search field is empty, show a popup message
+        // 如果搜索字段为空，则显示弹出消息
         else if (word.equals(""))
         {
             gui.currentPopup = new PopupMessage(gui, "You did'nt enter anything to search!");
             gui.currentPopup.setVisible(true);
         }
 
+        // If the text field is empty, show a popup message
+        // 如果文本字段为空，则显示弹出消息
         else if (text.equals(""))
         {
             gui.currentPopup = new PopupMessage(gui, "There's no text to search!");
             gui.currentPopup.setVisible(true);
         }
-
+        
+        // If there is an error, show a popup message
+        // 如果有别的错误，则显示弹出消息
         else
         {
             gui.currentPopup = new PopupMessage(gui, "Search error");
@@ -205,71 +249,91 @@ public class SearchFunction implements ActionListener, KeyListener
         }
     }
 
-    // Функция для переключения на следующее вхождение
+    // Switch to the next occurrence method
+    // 切换到下一个出现的方法
     private void nextMatch()
     {
         if (!indices.isEmpty())
         {
-            // Увеличиваем текущий индекс и оборачиваем его, если он превышает размер списка
+            // Increase the current index and wrap it if it exceeds the size of the list
+            // 增加当前索引并在超出列表大小时进行包装
             currentIndex = (currentIndex + 1) % indices.size();
     
-            // Обновляем counterLabel
+            // Update the counterLabel
+            // 更新counterLabel
             counterLabel.setText((currentIndex + 1) + "/" + indices.size());
     
-            // Устанавливаем курсор на следующее вхождение
+            // Set the cursor to the next occurrence
+            // 将光标设置为下一个出现
             gui.textArea.setCaretPosition(indices.get(currentIndex));
     
-            // Выделяем найденное слово
+            // Highlight the found word
+            // 高亮显示找到的单词
             gui.textArea.setSelectionStart(indices.get(currentIndex));
             gui.textArea.setSelectionEnd(indices.get(currentIndex) + searchField.getText().length());
         }
     }
-    
-    // Функция для переключения на предыдущее вхождения
+        
+    // Switch to the previous occurrence method
+    // 切换到上一个出现的方法
     private void prevMatch()
     {
         if (!indices.isEmpty())
         {
-            // Уменьшаем текущий индекс и оборачиваем его, если он становится отрицательным
+            // Decrease the current index and wrap it if it is less than 0
+            // 减少当前索引并在小于0时进行包装
             currentIndex = (currentIndex - 1 + indices.size()) % indices.size();
-    
-            // Обновляем counterLabel
+
+            // Update the counterLabel    
+            // 更新counterLabel
             counterLabel.setText((currentIndex + 1) + "/" + indices.size());
     
-            // Устанавливаем курсор на предыдущее вхождение
+            // Set the cursor to the previous occurrence
+            // 将光标设置为上一个出现
             gui.textArea.setCaretPosition(indices.get(currentIndex));
     
-            // Выделяем найденное слово
+            // Highlight the found word
+            // 高亮显示找到的单词
             gui.textArea.setSelectionStart(indices.get(currentIndex));
             gui.textArea.setSelectionEnd(indices.get(currentIndex) + searchField.getText().length());
         }
     }
 
 
-    // Функция замены
+    // Replace the selected text method
+    // 替换所选文本的方法
     public void replaceText()
     {
+        // Check if there are any matches
+        // 检查是否有任何匹配项
         if (indices != null)
         {
+            // Check if the search field and replace field are not empty
+            // 检查搜索字段和替换字段是否不为空
             if (!indices.isEmpty()) 
             {
                 try 
                 {
-                    // Получаем текст для замены из соответствующего текстового поля
+                    // Get the text to replace with
+                    // 获取要替换的文本
                     String replacement = replaceField.getText();
 
-                    // Получаем документ из JTextPane
+                    // Get the document
+                    // 获取文档
                     Document doc = gui.textArea.getDocument();
 
-                    // Получаем начало и конец выделенного текста
+                    // Get the start and end indices of the selected text
+                    // 获取所选文本的开始和结束索引
                     int start = indices.get(currentIndex);
                     int end = start + searchField.getText().length();
 
-                    // Заменяем выделенный текст
+                    // Replace the text
+                    // 替换文本
                     doc.remove(start, end - start);
                     doc.insertString(start, replacement, null);
 
-                    // Обновляем список индексов, так как текст был изменен
+                    // Update the list of indices since the text has changed
+                    // 所以我们需要重新搜索
                     performSearch();
                 } 
                 catch (BadLocationException e) 
@@ -278,12 +342,15 @@ public class SearchFunction implements ActionListener, KeyListener
                 }
             }
 
+            // If there are no text to replace, show a popup message
+            // 如果没有文本可以替换，则显示弹出消息
             else
             {
                 gui.currentPopup = new PopupMessage(gui, "There's no text to replace");
                 gui.currentPopup.setVisible(true);
             }
         }
+
         else
         {
             gui.currentPopup = new PopupMessage(gui, "There's no text to replace or no text to enter replaced text");
@@ -291,7 +358,8 @@ public class SearchFunction implements ActionListener, KeyListener
         }
     }
 
-    // Обработка нажатий кнопок
+    // Action listener method
+    // 操作侦听器方法
     @Override
     public void actionPerformed(ActionEvent e) 
     {
@@ -311,25 +379,24 @@ public class SearchFunction implements ActionListener, KeyListener
     }
 
 
-    // Обработка нажатий клавиш
+    // Key listener methods
+    // 键盘侦听器方法
     @Override
     public void keyPressed(KeyEvent e) 
     {
-        if (e.getSource() == gui.textArea)
-        {
-            if (e.getKeyCode() == 27) findReplaceDialog.dispose();  
-        }
-        else if (e.getSource() == replaceField)
-        {
-            if (e.getKeyCode() == 27) findReplaceDialog.dispose();
-        }
-        else
+        // Two cases for closing the window
+        if (e.getSource() == gui.textArea && e.getKeyCode() == KeyEvent.VK_ESCAPE) findReplaceDialog.dispose();  
+        else if (e.getSource() == replaceField && e.getKeyCode() == KeyEvent.VK_ESCAPE) findReplaceDialog.dispose();
+        
+        // Case for closing or performing search when search field is focused
+        // 当搜索字段聚焦时关闭或执行搜索的情况
+        else if (KeyboardFocusManager.getCurrentKeyboardFocusManager().getFocusOwner() == searchField)
         {
             switch (e.getKeyCode())
             {
-                case 27:
+                case KeyEvent.VK_ESCAPE:
                     findReplaceDialog.dispose(); break;
-                case 10:
+                case KeyEvent.VK_ENTER:
                     performSearch(); break;
             }
         }
