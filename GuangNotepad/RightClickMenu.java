@@ -2,12 +2,14 @@ package GuangNotepad;
 
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
-import javax.swing.text.DefaultEditorKit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+
+// RightClickMenu class
+// 右键菜单类
 
 public class RightClickMenu implements ActionListener
 {
@@ -20,26 +22,29 @@ public class RightClickMenu implements ActionListener
         formatFunction = new FormatFunction(gui);
 
         // Create the right-click menu
+        // 创建右键菜单
         JPopupMenu popupMenu = new JPopupMenu();
 
         // Create the menu items and add action listeners
+        // 创建菜单项并添加动作监听器
         JMenuItem mouseCut = new JMenuItem("Cut");
         mouseCut.addActionListener(this);
-        mouseCut.setActionCommand(DefaultEditorKit.cutAction);
+        mouseCut.setActionCommand("Cut");
 
         JMenuItem mouseCopy = new JMenuItem("Copy");
         mouseCopy.addActionListener(this);
-        mouseCopy.setActionCommand(DefaultEditorKit.copyAction);
+        mouseCopy.setActionCommand("Copy");
 
         JMenuItem mousePaste = new JMenuItem("Paste");
         mousePaste.addActionListener(this);
-        mousePaste.setActionCommand(DefaultEditorKit.pasteAction);
+        mousePaste.setActionCommand("Paste");
 
         JMenuItem mouseFont = new JMenuItem("Font settings");
         mouseFont.addActionListener(this);
         mouseFont.setActionCommand("Font");
 
         // Add the menu items to the popup menu
+        // 将菜单项添加到弹出菜单
         popupMenu.add(mouseCut);
         popupMenu.add(mouseCopy);
         popupMenu.add(mousePaste);
@@ -47,6 +52,7 @@ public class RightClickMenu implements ActionListener
         gui.textArea.setComponentPopupMenu(popupMenu);
 
         // Attach the popup menu to the text component
+        // 将弹出菜单附加到文本组件
         gui.textArea.addMouseListener(new MouseAdapter() 
         {
             @Override
@@ -61,15 +67,17 @@ public class RightClickMenu implements ActionListener
 
     }
 
+    // Action listener for the right-click menu
+    // 右键菜单的动作监听器
     @Override
     public void actionPerformed(ActionEvent e)
     {
         switch (e.getActionCommand())
         {
-            case "Cut": gui.textArea.cut(); break;
-            case "Copy": gui.textArea.copy(); break;
-            case "Paste": gui.textArea.paste(); break;
-            case "Font": formatFunction.setTextFontAndSize(); break;
+            case "Cut": gui.editFunction.cut(); break;
+            case "Copy": gui.editFunction.copy(); break;
+            case "Paste": gui.editFunction.paste(); break;
+            case "Font": gui.formatFunction.setTextFontAndSize(); break;
         }
     }
 }

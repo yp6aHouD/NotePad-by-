@@ -49,6 +49,7 @@ public class GUI implements ActionListener
     EditFunction editFunction = new EditFunction(this);
     HotkeyHandler hotkeyHandler = new HotkeyHandler(this);
     UndoManager um = new UndoManager();
+    RightClickMenu rightClickMenu;
 
     // TODO: make right mouse click menu
 
@@ -79,6 +80,8 @@ public class GUI implements ActionListener
         // Create menu "Format"
         // 创建 "格式" 菜单
         createFormatMenu();
+
+        addRightMouseClickMenu();
         
         // Set window visible
         // 设置窗口可见
@@ -351,6 +354,13 @@ public class GUI implements ActionListener
         fBackgroundColor.addActionListener(this);
         fBackgroundColor.setActionCommand("SetBackground");
         formatMenu.add(fBackgroundColor);
+    }
+
+    // Add right mouse click menu
+    // 添加右键菜单
+    private void addRightMouseClickMenu() 
+    {
+        rightClickMenu = new RightClickMenu(this);    
     }
 
     // Tracking button clicks
