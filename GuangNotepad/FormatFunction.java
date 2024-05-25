@@ -381,8 +381,11 @@ public class FormatFunction
         // Setting the font, size, and style for the preview text
         // 为预览文本设置字体、大小和样式
         int style = Font.PLAIN;
-        if (fontStyle.contains("Bold")) style = Font.BOLD;
-        if (fontStyle.contains("Italic")) style = Font.ITALIC;
+
+        // Using bitwise OR to combine the font style
+        // 使用按位或运算符来组合字体样式
+        if (fontStyle.contains("Bold")) style |= Font.BOLD;
+        if (fontStyle.contains("Italic")) style |= Font.ITALIC;
         label.setFont(new Font(fontName, style, fontSize));
 
         // Updating the size of the window (to avoid text size clipping)

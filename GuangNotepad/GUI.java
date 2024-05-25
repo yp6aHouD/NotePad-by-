@@ -51,8 +51,6 @@ public class GUI implements ActionListener
     UndoManager um = new UndoManager();
     RightClickMenu rightClickMenu;
 
-    // TODO: make right mouse click menu
-
     // Constructor 
     // 构造方法
     public GUI()
