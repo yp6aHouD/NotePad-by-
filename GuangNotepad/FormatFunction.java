@@ -87,12 +87,28 @@ public class FormatFunction
         // Creating the second row of the panel
         // 创建面板的第二行
         JPanel secondRow = new JPanel(); 
+        
+        // Creating a label for the preview text
+        // 创建一个用于预览文本的标签
+        JLabel previewLabel = new JLabel("Preview text");
+        previewLabel.setFont(new Font(selectedFont, Font.PLAIN, selectedFontSize));
+
         secondRow.add(new JLabel("Style:"));
         secondRow.add(fontStyleList);
+        secondRow.add(Box.createHorizontalStrut(20));
+
+        secondRow.add(previewLabel);
 
         // Adding rows to the panel
         // 将行添加到面板
         panel.add(firstRow); panel.add(secondRow);
+
+        // Updating the preview text when selecting a font, size, or style
+        // 选择字体、大小或样式时更新预览文本
+        fontList.addActionListener(e -> updatePreview(previewLabel, fontList, fontSizeList, fontStyleList));
+        fontSizeList.addActionListener(e -> updatePreview(previewLabel, fontList, fontSizeList, fontStyleList));
+        fontStyleList.addActionListener(e -> updatePreview(previewLabel, fontList, fontSizeList, fontStyleList));
+
 
         // Show the window and choose the font / size / style
         // 显示窗口并选择字体/大小/样式
@@ -349,5 +365,28 @@ public class FormatFunction
         // 弹出消息
         gui.currentPopup = new PopupMessage(gui, "Text settings has been reset!");
         gui.currentPopup.setVisible(true);
+    }
+
+    // Method "Update preview text"
+    // "更新预览文本" 方法
+    private void updatePreview(JLabel label, JComboBox<String> fontList,
+        JComboBox<Integer> fontSizeList, JComboBox<String> fontStyleList) 
+    {
+        // Updating the preview text when selecting a font, size, or style
+        // 选择字体、大小或样式时更新预览文本
+        String fontName = (String)fontList.getSelectedItem();
+        int fontSize = (Integer)fontSizeList.getSelectedItem();
+        String fontStyle = (String)fontStyleList.getSelectedItem();
+    
+        // Setting the font, size, and style for the preview text
+        // 为预览文本设置字体、大小和样式
+        int style = Font.PLAIN;
+        if (fontStyle.contains("Bold")) style = Font.BOLD;
+        if (fontStyle.contains("Italic")) style = Font.ITALIC;
+        label.setFont(new Font(fontName, style, fontSize));
+
+        // Updating the size of the window (to avoid text size clipping)
+        // 更新窗口的大小（以避免文本大小裁剪）
+        SwingUtilities.getWindowAncestor(label).pack();
     }
 }
