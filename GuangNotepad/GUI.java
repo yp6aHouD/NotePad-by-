@@ -9,7 +9,6 @@ import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
 import javax.swing.undo.UndoManager;
 
-// TODO: сделать вкладки с разными файлами, чтобы можно было открывать несколько за раз
 
 // GUI class
 // GUI 类
