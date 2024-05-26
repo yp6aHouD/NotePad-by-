@@ -45,8 +45,8 @@ public class FileFunction
     // 新建文件方法
     public void newFile()
     {
-        // Clear text area and set title to "New"
-        // 清空文本区域并将标题设置为"New"
+        // Get document from text area
+        // 从文本区域获取文档
         doc = gui.textArea.getDocument();
 
         // If text area is not empty, ask user if they want to save
@@ -125,6 +125,23 @@ public class FileFunction
             fileAddress = fd.getDirectory();
             gui.window.setTitle(fileName);
             isNewFile = false;
+
+            // Check if the selected file is a text file
+            // 检查所选文件是否为文本文件
+            if (fileName.endsWith(".txt") || 
+                fileName.endsWith(".java") ||
+                fileName.endsWith(".html")) 
+            {
+                gui.window.setTitle(fileName);
+                isNewFile = false;
+            }
+            
+            else 
+            {
+                gui.currentPopup = new PopupMessage(gui, "Selected file is not a text file!");
+                gui.currentPopup.setVisible(true);
+                return;
+            }
         }
 
         // If file is not selected, return
@@ -225,6 +242,15 @@ public class FileFunction
         {
             fileName = fd.getFile();
             fileAddress = fd.getDirectory();
+
+            // Check if the file has an extension
+            // 检查文件是否有扩展名
+            if (!fileName.contains("."))
+            {
+                // If not, add .txt
+                fileName += ".txt";
+            }
+
             gui.window.setTitle(fileName);
         }
 

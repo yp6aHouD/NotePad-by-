@@ -78,6 +78,8 @@ public class GUI implements ActionListener
         // 创建 "格式" 菜单
         createFormatMenu();
 
+        // Add right mouse click menu
+        // 添加右键菜单
         addRightMouseClickMenu();
         
         // Set window visible

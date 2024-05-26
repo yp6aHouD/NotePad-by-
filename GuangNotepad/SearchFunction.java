@@ -17,8 +17,7 @@ public class SearchFunction implements ActionListener, KeyListener
     private GUI gui;
     private JDialog findReplaceDialog;
     private JTextField searchField, replaceField;
-    private JButton closeButton, searchButton, replaceButton,
-        prevButton, nextButton;
+    private JButton closeButton, searchButton, replaceButton, prevButton, nextButton;
     private JLabel searchLabel, counterLabel;
     private List<Integer> indices;
     private int currentIndex;
@@ -138,7 +137,6 @@ public class SearchFunction implements ActionListener, KeyListener
 
         gbc.gridx = 1;
         findReplaceDialog.add(replaceButton, gbc);
-
 
 
         // Handling window movement when parent window is moved
